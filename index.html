@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>He</title>
+  <style>
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+}
+
+table {
+    border-spacing: 5px;
+}
+
+</style>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+<script>
+    // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAUN-FHahV2FwCJUJG8zLAIDtw-UmXx28o",
+    authDomain: "fir-one-b9889.firebaseapp.com",
+    databaseURL: "https://fir-one-b9889.firebaseio.com",
+    projectId: "fir-one-b9889",
+    storageBucket: "fir-one-b9889.appspot.com",
+    messagingSenderId: "451280606351",
+    appId: "1:451280606351:web:f1bf31cf9392aaa6494cfa"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+
+</head>
+<body>
+   <button onclick="Buscar()">Buscar</button>
+
+<br>
+<br>  
+
+ <table>
+     <thead>
+            <tr>
+                <th  style="color:black">Nombre</th>
+                <th  style="color:black">Edad</th>                                    
+             </tr>
+     </thead>
+     <tbody id="tabla">  
+          
+     </tbody>
+ </table>
+
+<script>
+
+function Buscar() {    
+  
+
+var db = firebase.database();
+var ref = db.ref("Usuarios");
+     
+var table = document.getElementById("tabla");
+    
+//limpia la tabla
+table.innerHTML = '';
+ 
+ //con esta función recorre todos los datos almacenados en FB ordenados por mi child(tipo)
+    
+ref.orderByChild("Nombre").on("child_added", function(snapshot){
+//repite el proceso como cuantas referencias encuentre y los asigna a la lista "d"
+     
+  var d = snapshot.val();        
+        
+  {
+  var row = table.insertRow(0);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  
+  // asigna a las celdas el valir del Child especificado
+  cell1.innerHTML = d.Nombre.replace(/['"]+/g, '');
+  cell2.innerHTML = d.DUI.replace(/['"]+/g, '');
+  }
+ 
+        
+});
+ 
+}
+
+
+</script>
+</body>
+</html>
