@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>He</title>
+  <style>
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+}
+
+table {
+    border-spacing: 5px;
+}
+
+</style>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+<script>
+
+
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBy7pQhsFk8l6t2Lq3XerI42mM-_Dpoie0",
+    authDomain: "watermeter-1457e.firebaseapp.com",
+    databaseURL: "https://watermeter-1457e.firebaseio.com",
+    projectId: "watermeter-1457e",
+    storageBucket: "",
+    messagingSenderId: "784801844147",
+    appId: "1:784801844147:web:9b7c7904076b6ef9e599c6"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+
+</head>
+<body>
+   <button onclick="Buscar()">Buscar</button>
+
+<br>
+<br>  
+
+ <table>
+     <thead>
+            <tr>
+                <th  style="color:black">Fecha</th>
+                <th  style="color:black">Litros Consumidos</th>
+                <th  style="color:black">Litros Necesarios</th>
+                <th  style="color:black">Tipo De Consumo</th>                                      
+             </tr>
+     </thead>
+     <tbody id="tabla">  
+          
+     </tbody>
+ </table>
+
+<script>
+
+function Buscar() {    
+  
+var uid = "aedLiKU04ifQOwgt9A3nfGRGOpq2";
+
+var db = firebase.database();
+var ref = db.ref("Usuarios/"+uid+"/Datos_Consumo_De_Agua/Dia");
+     
+var table = document.getElementById("tabla");
+    
+//limpia la tabla
+table.innerHTML = "";
+
+ //con esta función recorre todos los datos almacenados en FB ordenados por mi child(tipo)
+    
+ref.orderByChild("Fecha").on("child_added", function(snapshot){
+//repite el proceso como cuantas referencias encuentre y los asigna a la lista "d"
+     
+  var d = snapshot.val();        
+        
+  {
+  var row = table.insertRow(0);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  var cell4 = row.insertCell(3);
+  
+  // asigna a las celdas el valir del Child especificado
+  cell1.innerHTML = d.Fecha.replace(/['"]+/g, '');
+  cell2.innerHTML = d.Litros_Consumidos.replace(/['"]+/g, '');
+  cell3.innerHTML = d.Litros_Necesarios.replace(/['"]+/g, '');
+  cell4.innerHTML = d.Tipo_Consumo.replace(/['"]+/g, '');
+  }
+ 
+
+     
+});
+ 
+}
+
+
+</script>
+</body>
+</html>
